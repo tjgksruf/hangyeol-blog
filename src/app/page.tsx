@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+import { posts } from '@/lib/posts';
 
 export default function Home() {
   return (
@@ -31,19 +33,20 @@ export default function Home() {
         </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          {[
-            { title: "현대 운영체제의 CPU 스케줄링과 선점형 멀티태스킹", date: "2026. 04. 05", category: "OS" },
-            { title: "분산 시스템에서의 일관성 모델과 CAP 정리의 재해석", date: "2026. 03. 28", category: "System" },
-            { title: "자료구조의 효율성: 해시 테이블의 충돌 해결 전략 비교", date: "2026. 03. 15", category: "Algorithm" },
-            { title: "컴파일러 최적화 기법: 인라이닝과 루프 언롤링의 원리", date: "2026. 03. 02", category: "Compiler" }
-          ].map((post, i) => (
-            <div key={i} className="glass glass-hover" style={{ padding: '24px', cursor: 'pointer' }}>
+          {posts.map((post, i) => (
+            <Link key={post.slug} href={`/posts/${post.slug}`} className="glass glass-hover" style={{ padding: '24px', display: 'block', textDecoration: 'none' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                <h3 style={{ fontSize: '1.3rem', wordBreak: 'keep-all' }}>{post.title}</h3>
+                <h3 style={{ fontSize: '1.3rem', wordBreak: 'keep-all', color: 'var(--foreground)' }}>{post.title}</h3>
                 <span style={{ color: 'var(--accent)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', padding: '4px 8px', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '4px' }}>{post.category}</span>
               </div>
-              <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>{post.date}</p>
-            </div>
+              <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '16px', wordBreak: 'keep-all' }}>
+                {post.excerpt}
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>{post.date}</span>
+                <span style={{ color: 'var(--accent)', fontSize: '0.9rem', fontWeight: 500 }}>더 읽어보기 →</span>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
